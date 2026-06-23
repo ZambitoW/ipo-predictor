@@ -13,9 +13,12 @@ app = FastAPI(
 )
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[ "http://localhost:3000",
+    allow_origins=[
+        "http://localhost:3000",
         "https://ipo-predictor-l8d2.vercel.app",
-        "https://*.vercel.app",],
+        "https://ipo-predictor-l8d2-git-main-zambitows-projects.vercel.app",
+        "https://ipo-predictor-l8d2-qkms7k7ov-zambitows-projects.vercel.app",
+    ],
     allow_methods=["*"],
     allow_headers=["*"],
 )

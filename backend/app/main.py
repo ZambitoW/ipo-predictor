@@ -4,11 +4,18 @@ import numpy as np
 from app.model import get_model, FEATURES, predict
 from app.fred import get_macro_data
 from typing import Optional
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title= "IPO Underpricing Predictor",
     description="Predicts whether an IPO will be underpriced using XGBoost trained on 6,110 historical IPOs.",
     version="1.0.0"
+)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000", "https://*.vercel.app"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 class IPOInput(BaseModel):

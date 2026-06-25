@@ -28,8 +28,8 @@ def fetch_latest(series_id):
         "observation_start": start,
         "observation_end": end,
         "sort_order": "desc",
-        "limit": 2  
-    })
+        "limit": 2
+    }, timeout=10)
     data = response.json()
     return data["observations"]
 
@@ -42,7 +42,7 @@ def get_valid(series_id, start, end):
         "observation_end": end,
         "sort_order": "desc",
         "limit": 10
-    })
+    }, timeout=10)
     valid = [o for o in r.json()["observations"] if o["value"] != "."]
     return float(valid[0]["value"]) if valid else None
 

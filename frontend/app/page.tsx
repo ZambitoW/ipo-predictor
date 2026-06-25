@@ -61,7 +61,28 @@ export default function Home() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  const validate = (): string | null => {
+    if (!form.offer_size_m || isNaN(parseFloat(form.offer_size_m))) return 'Offer Size is required.'
+    if (!form.offer_price || isNaN(parseFloat(form.offer_price))) return 'Offer Price is required.'
+    if (!form.shares_offered || isNaN(parseFloat(form.shares_offered))) return 'Shares Offered is required.'
+    if (!form.market_cap_m || isNaN(parseFloat(form.market_cap_m))) return 'Market Cap at Offer is required.'
+    if (parseFloat(form.offer_size_m) <= 0) return 'Offer Size must be greater than zero.'
+    if (parseFloat(form.offer_price) <= 0) return 'Offer Price must be greater than zero.'
+    if (parseFloat(form.shares_offered) <= 0) return 'Shares Offered must be greater than zero.'
+    if (parseFloat(form.market_cap_m) <= 0) return 'Market Cap at Offer must be greater than zero.'
+    if (form.year && (parseInt(form.year) < 1990 || parseInt(form.year) > new Date().getFullYear())) return 'Year must be between 1990 and the current year.'
+    if (form.month && (parseInt(form.month) < 1 || parseInt(form.month) > 12)) return 'Month must be between 1 and 12.'
+    if ((form.year && !form.month) || (!form.year && form.month)) return 'Provide both Year and Month, or leave both blank.'
+    return null
+  }
+
   const handleSubmit = async () => {
+    const validationError = validate()
+    if (validationError) {
+      setError(validationError)
+      return
+    }
+
     setLoading(true)
     setError(null)
     setResult(null)
